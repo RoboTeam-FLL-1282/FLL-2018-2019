@@ -1,19 +1,8 @@
 package Navigation;
 import java.util.ArrayList;
-import java.util.Collections;
-
 public class HermiteSpline{
 
     private ArrayList<Point> controlPoints;
-    
-    public HermiteSpline(Point... controlPoints) throws Exception {
-        this.controlPoints = new ArrayList<>();
-        if(controlPoints.length < 4){
-            throw new Exception("Hermite Cubic spline must have at least 4 points");
-        }
-        Collections.addAll(this.controlPoints, controlPoints);
-    }
-
 
     public HermiteSpline(ArrayList<Point> controlPoints) throws Exception {
         if(controlPoints.size() < 4){
