@@ -1,38 +1,24 @@
 package EV3;
 
-import lejos.hardware.motor.Motor;
-import lejos.hardware.motor.NXTRegulatedMotor;
+import lejos.hardware.motor.EV3MediumRegulatedMotor;
+import lejos.hardware.port.Port;
 import lejos.utility.Delay;
 
-public class MediumMotor {// Done!
-	NXTRegulatedMotor motor;
+public class MediumMotor {
+	EV3MediumRegulatedMotor motor;
 
-	public MediumMotor(String port) {
-		motor = stringToPort(port);
-	}
-
-	private NXTRegulatedMotor stringToPort(String port) {
-		switch(port){
-			case "a":
-				return Motor.A;
-			case "b":
-				return Motor.B;
-			case "c":
-				return Motor.C;
-			case "d":
-				return Motor.D;
-			case "A":
-				return Motor.A;
-			case "B":
-				return Motor.B;
-			case "C":
-				return Motor.C;
-			case "D":
-				return Motor.D;
-		}
-		return null;
+	/**
+	 * @param port - The motor's port.
+	 */
+	public MediumMotor(Port port) {
+		motor = new EV3MediumRegulatedMotor(port);
 	}
 	
+	/**
+	 * @param speed
+	 * @param rotations
+	 * @param brakeAtEnd
+	 */
 	public void onForRotations(int speed, int rotations, boolean brakeAtEnd) {
 
 		// Set motor speed in degrees/second
@@ -49,6 +35,11 @@ public class MediumMotor {// Done!
 
 	}
 
+	/**
+	 * @param speed
+	 * @param degrees
+	 * @param brakeAtEnd
+	 */
 	public void onForDegrees(int speed, int degrees, boolean brakeAtEnd) {
 
 		// Set motor speed in degrees/second
@@ -65,6 +56,11 @@ public class MediumMotor {// Done!
 
 	}
 	
+	/**
+	 * @param speed
+	 * @param seconds
+	 * @param brakeAtEnd
+	 */
 	public void onForSeconds(int speed, int seconds, boolean brakeAtEnd) {
 
 		// Set motor speed in degrees/second
@@ -81,6 +77,10 @@ public class MediumMotor {// Done!
 
 	}
 	
+	/**
+	 * Immediately returns. 
+	 * @param speed
+	 */
 	public void on(int speed) {
 		
 		// Set motor speed in degrees/second
@@ -94,6 +94,9 @@ public class MediumMotor {// Done!
 		
 	}
 	
+	/**
+	 * Stops the motor.
+	 */
 	public void off() {
 		
 		// Stop motor.
@@ -101,11 +104,16 @@ public class MediumMotor {// Done!
 		
 	}
 
-	// Use when the motor is no longer needed.
+	/**
+	 * Use when the motor is no longer needed.
+	 */
 	public void close() {
 		motor.close();
 	}
 
+	/**
+	 * @return - The motor's current speed (degrees per second).
+	 */
 	public double getSpeed() {
 		return motor.getSpeed();
 	}

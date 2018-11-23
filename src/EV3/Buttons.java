@@ -1,6 +1,6 @@
 package EV3;
 
-public enum Buttons { // Done!
+public enum Buttons {
 
 	UP,
 	DOWN,

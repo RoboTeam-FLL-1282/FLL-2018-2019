@@ -2,13 +2,14 @@ package FLL;
 
 import EV3.Display;
 import EV3.MediumMotor;
+import EV3.Ports;
 import lejos.hardware.Button;
 
 public class MotorControl {
 
 	static int speed = 1000;
-	static MediumMotor b = new MediumMotor("B");
-	static MediumMotor c = new MediumMotor("C");
+	static MediumMotor b = new MediumMotor(Ports.B);
+	static MediumMotor c = new MediumMotor(Ports.C);
 	
 	public static void main(String[] args) {
 		Display.setScreen();

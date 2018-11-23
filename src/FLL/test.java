@@ -16,8 +16,7 @@ public class test {
 		
 		pid.startPID(Types.GyroMode);
 		BrickButtons.waitForAnyPress();
-		pid.stopPID();
-			
+		pid.stopPID();			
 	}
 	
 }

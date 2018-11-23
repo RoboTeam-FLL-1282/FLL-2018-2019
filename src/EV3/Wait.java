@@ -2,8 +2,11 @@ package EV3;
 
 import lejos.utility.Delay;
 
-public abstract class Wait { // Done!
+public abstract class Wait {
 
+	/**
+	 * @param milliSeconds
+	 */
 	public static void time(int milliSeconds) {
 		Delay.msDelay(milliSeconds);
 	}
