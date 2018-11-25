@@ -17,7 +17,8 @@ public class NoValueException {
 		// Show Alert:
 		Display.setScreen();
 		Display.resetScreen();
-		Display.text("NoValueException: " + message, 0, 0);
+		Display.text("NoValueException: ", 0, 0);
+		Display.text(message, 0, 40);
 		
 	}
 	
