@@ -2,23 +2,37 @@ package Motion;
 
 import EV3.ColorSensor;
 import EV3.MoveTank;
+import Exceptions.NoValueException;
 import lejos.hardware.port.Port;
 
 public class BlackLineAlignment {
 
+	static double blackValue = Double.NaN;
+	
+	/**
+	 * @param blackValue - The value that the sensor returns when it sees the black line.
+	 * It can also be any other color value.
+	 */
+	public static void setBlackValue(double blackValue) {
+		BlackLineAlignment.blackValue = blackValue;
+	}
+	
 	/**
 	 * The robot drives until it recognizes a black line.
 	 * Then it aligns on the black line using two color sensors.
 	 * @param speed
-	 * @param port1
-	 * @param port2
-	 * @param blackValue
+	 * @param leftPort
+	 * @param rightPort
 	 */
-	public void align(int speed, Port port1, Port port2, double blackValue) {
-
-		ColorSensor leftSensor = new ColorSensor(port1);
+	public static void align(int speed, Port leftPort, Port rightPort) {
+		
+		if(blackValue == Double.NaN) {
+			NoValueException.alert("The black value is not set!");
+		}
+		
+		ColorSensor leftSensor = new ColorSensor(leftPort);
 		leftSensor.setReflectedLightMode();
-		ColorSensor rightSensor = new ColorSensor(port2);
+		ColorSensor rightSensor = new ColorSensor(rightPort);
 		rightSensor.setReflectedLightMode();
 		while(leftSensor.reflectedLight()>blackValue && rightSensor.reflectedLight()>blackValue) {
 			MoveTank.on(speed, speed);
@@ -30,7 +44,8 @@ public class BlackLineAlignment {
 			}
 			MoveTank.off();
 
-		}else {
+		}
+		else {
 			while(leftSensor.reflectedLight()>blackValue) {
 				MoveTank.on(speed, 0);
 			}

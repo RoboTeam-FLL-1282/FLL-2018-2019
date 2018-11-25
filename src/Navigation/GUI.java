@@ -48,7 +48,7 @@ public class GUI extends JPanel implements MouseMotionListener, MouseListener{
 		}
 	}
 
-	public double calculate_distance_between_points(Point point1, Point point2) {
+	private double calculate_distance_between_points(Point point1, Point point2) {
 		double deltaX = point2.x - point1.x;
 		double deltaY = point2.y - point1.y;
 		return Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
