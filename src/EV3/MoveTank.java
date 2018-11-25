@@ -41,8 +41,10 @@ public abstract class MoveTank {
 	public static void onForRotations(int leftSpeed, int rightSpeed, int rotations, boolean brakeAtEnd) {
 		leftWheel.setSpeed(leftSpeed);
 		rightWheel.setSpeed(rightSpeed);
-		move(leftSpeed, rightSpeed);
-		Delay.msDelay(((rotations*360)/leftSpeed)*1000);
+//		move(leftSpeed, rightSpeed);
+//		Delay.msDelay(((rotations*360)/leftSpeed)*1000);
+		leftWheel.rotate(rotations*360, true);
+		rightWheel.rotate(rotations*360, true);
 		if(brakeAtEnd) {
 			leftWheel.stop(true);
 			rightWheel.stop(true);
@@ -58,8 +60,10 @@ public abstract class MoveTank {
 	public static void onForDegrees(int leftSpeed, int rightSpeed, int degrees, boolean brakeAtEnd) {
 		leftWheel.setSpeed(leftSpeed);
 		rightWheel.setSpeed(rightSpeed);
-		move(leftSpeed, rightSpeed);
-		Delay.msDelay((degrees/leftSpeed)*1000);
+//		move(leftSpeed, rightSpeed);
+//		Delay.msDelay((degrees/leftSpeed)*1000);
+		leftWheel.rotate(degrees, true);
+		rightWheel.rotate(degrees, true);
 		if(brakeAtEnd) {
 			leftWheel.stop(true);
 			rightWheel.stop(true);
@@ -93,7 +97,7 @@ public abstract class MoveTank {
 		leftWheel.setSpeed(leftSpeed);
 		rightWheel.setSpeed(rightSpeed);
 		move(leftSpeed, rightSpeed);
-		Delay.msDelay((long)(distance/leftSpeed)*1000);
+		Delay.msDelay((long)((distance/leftSpeed)*1000));
 		if(brakeAtEnd) {
 			leftWheel.stop(true);
 			rightWheel.stop(true);

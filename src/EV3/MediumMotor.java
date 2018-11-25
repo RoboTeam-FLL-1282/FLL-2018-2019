@@ -15,19 +15,33 @@ public class MediumMotor {
 	}
 	
 	/**
+	 * Start rotating the motor.
+	 * @param speed
+	 */
+	private void move(int speed) {
+		
+		// Set motor speed:
+		motor.setSpeed(speed);
+		if(speed > 0)
+			move(speed);
+		else
+			motor.backward();
+	}
+	
+	/**
 	 * @param speed
 	 * @param rotations
 	 * @param brakeAtEnd
 	 */
 	public void onForRotations(int speed, int rotations, boolean brakeAtEnd) {
+		
+//		move(speed);
+//		
+//		// Wait:
+//		Delay.msDelay(((rotations*360)/speed)*1000);
 
-		// Set motor speed in degrees/second
-		motor.setSpeed(speed);
-		motor.forward();	// Starts rotation.
-
-		// Wait:
-		Delay.msDelay(((rotations*360)/speed)*1000);
-
+		motor.rotate(rotations*360);
+		
 		// Break at end?
 		if(brakeAtEnd) {
 			motor.stop();
@@ -42,13 +56,13 @@ public class MediumMotor {
 	 */
 	public void onForDegrees(int speed, int degrees, boolean brakeAtEnd) {
 
-		// Set motor speed in degrees/second
-		motor.setSpeed(speed);
-		motor.forward();	// Starts rotation.
+//		move(speed);
+//		
+//		// Wait:
+//		Delay.msDelay((degrees/speed)*1000);
 
-		// Wait:
-		Delay.msDelay((degrees/speed)*1000);
-
+		motor.rotate(degrees);
+		
 		// Break at end?
 		if(brakeAtEnd) {
 			motor.stop();
@@ -63,9 +77,7 @@ public class MediumMotor {
 	 */
 	public void onForSeconds(int speed, int seconds, boolean brakeAtEnd) {
 
-		// Set motor speed in degrees/second
-		motor.setSpeed(speed);
-		motor.forward();	// Starts rotation.
+		move(speed);
 
 		// Wait:
 		Delay.msDelay(seconds*1000);
@@ -82,16 +94,7 @@ public class MediumMotor {
 	 * @param speed
 	 */
 	public void on(int speed) {
-		
-		// Set motor speed in degrees/second
-		motor.setSpeed(speed);
-		
-		if(speed >= 0)
-			motor.forward();	// Starts rotation.
-		else
-			motor.backward();
-		
-		
+		move(speed);
 	}
 	
 	/**
