@@ -141,8 +141,9 @@ public class PID {
 	public double calculateTurn(double currentValue) {
 		error = calculateError(currentValue);
 		reset = caculateReset();
+		double turn = P() + I() + D();
 		lastReset = reset;
 		lastError = error;
-		return P() + I() + D();
+		return turn;
 	}
 }

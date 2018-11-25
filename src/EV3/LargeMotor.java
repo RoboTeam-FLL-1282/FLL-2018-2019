@@ -16,15 +16,27 @@ public class LargeMotor {
 	}
 
 	/**
+	 * Start rotating the motor.
+	 * @param speed
+	 */
+	private void move(int speed) {
+		
+		// Set motor speed:
+		motor.setSpeed(speed);
+		if(speed > 0)
+			move(speed);
+		else
+			motor.backward();
+	}
+	
+	/**
 	 * @param speed
 	 * @param rotations
 	 * @param brakeAtEnd
 	 */
 	public void onForRotations(int speed, int rotations, boolean brakeAtEnd) {
-
-		// Set motor speed in degrees/second
-		motor.setSpeed(speed);
-		motor.forward();	// Starts rotation.
+		
+		move(speed);	// Starts rotation.
 
 		// Wait:
 		Delay.msDelay(((rotations*360)/speed)*1000);
@@ -43,9 +55,7 @@ public class LargeMotor {
 	 */
 	public void onForDegrees(int speed, int degrees, boolean brakeAtEnd) {
 
-		// Set motor speed in degrees/second
-		motor.setSpeed(speed);
-		motor.forward();	// Starts rotation.
+		move(speed);	// Starts rotation.
 
 		// Wait:
 		Delay.msDelay((degrees/speed)*1000);
@@ -54,7 +64,6 @@ public class LargeMotor {
 		if(brakeAtEnd) {
 			motor.stop();
 		}
-
 	}
 	
 	/**
@@ -64,9 +73,7 @@ public class LargeMotor {
 	 */
 	public void onForSeconds(int speed, int seconds, boolean brakeAtEnd) {
 
-		// Set motor speed in degrees/second
-		motor.setSpeed(speed);
-		motor.forward();	// Starts rotation.
+		move(speed);	// Starts rotation.
 
 		// Wait:
 		Delay.msDelay(seconds*1000);
@@ -84,9 +91,7 @@ public class LargeMotor {
 	 */
 	public void on(int speed) {
 		
-		// Set motor speed in degrees/second
-		motor.setSpeed(speed);
-		motor.forward();	// Starts rotation.
+		move(speed);	// Starts rotation.
 		
 	}
 	
