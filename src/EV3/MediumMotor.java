@@ -103,7 +103,7 @@ public class MediumMotor {
 	public void off() {
 		
 		// Stop motor.
-		motor.stop();
+		motor.stop(true);
 		
 	}
 

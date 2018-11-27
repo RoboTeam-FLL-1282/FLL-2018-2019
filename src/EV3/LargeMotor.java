@@ -105,7 +105,7 @@ public class LargeMotor {
 	public void off() {
 		
 		// Stop motor.
-		motor.stop();
+		motor.stop(true);
 		
 	}
 
