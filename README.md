@@ -4,5 +4,5 @@ A useful library for java programmers that includes important and essential tool
 Requirements:
  - Lejos installed
  
-*pay attention*:
+*Pay attention*:
 Not all the classes and functions in this repository are ready and working properly yet.
