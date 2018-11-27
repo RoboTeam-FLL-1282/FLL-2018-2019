@@ -2,7 +2,7 @@ package Motion;
 
 import EV3.ColorSensor;
 import EV3.MoveTank;
-import Exceptions.NoValueException;
+import Tools.Alert;
 import lejos.hardware.port.Port;
 
 public class BlackLineAlignment {
@@ -27,7 +27,7 @@ public class BlackLineAlignment {
 	public static void align(int speed, Port leftPort, Port rightPort) {
 		
 		if(blackValue == Double.NaN) {
-			NoValueException.alert("The black value is not set!");
+			Alert.notify("The black value is not set!");
 		}
 		
 		ColorSensor leftSensor = new ColorSensor(leftPort);

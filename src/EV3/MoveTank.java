@@ -4,8 +4,8 @@ import lejos.hardware.port.Port;
 import lejos.utility.Delay;
 public abstract class MoveTank {
 
-	static EV3LargeRegulatedMotor leftWheel;
-	static EV3LargeRegulatedMotor rightWheel;
+	static EV3LargeRegulatedMotor leftMotor;
+	static EV3LargeRegulatedMotor rightMotor;
 	
 	/**
 	 * Must be called before any other method.
@@ -13,8 +13,8 @@ public abstract class MoveTank {
 	 * @param rightMotorPort - Right motor's port.
 	 */
 	public static void setMainMotors(Port leftMotorPort, Port rightMotorPort) {
-		leftWheel = new EV3LargeRegulatedMotor(leftMotorPort);
-		rightWheel = new EV3LargeRegulatedMotor(rightMotorPort);
+		leftMotor = new EV3LargeRegulatedMotor(leftMotorPort);
+		rightMotor = new EV3LargeRegulatedMotor(rightMotorPort);
 	}
 	
 	/**
@@ -23,13 +23,13 @@ public abstract class MoveTank {
 	 */
 	private static void move(int leftSpeed, int rightSpeed) {
 		if(leftSpeed > 0)
-			leftWheel.forward();
+			leftMotor.forward();
 		else
-			leftWheel.backward();
+			leftMotor.backward();
 		if(rightSpeed > 0)
-			rightWheel.forward();
+			rightMotor.forward();
 		else
-			rightWheel.backward();
+			rightMotor.backward();
 	}
 	
 	/**
@@ -39,15 +39,15 @@ public abstract class MoveTank {
 	 * @param brakeAtEnd
 	 */
 	public static void onForRotations(int leftSpeed, int rightSpeed, int rotations, boolean brakeAtEnd) {
-		leftWheel.setSpeed(leftSpeed);
-		rightWheel.setSpeed(rightSpeed);
+		leftMotor.setSpeed(leftSpeed);
+		rightMotor.setSpeed(rightSpeed);
 //		move(leftSpeed, rightSpeed);
 //		Delay.msDelay(((rotations*360)/leftSpeed)*1000);
-		leftWheel.rotate(rotations*360, true);
-		rightWheel.rotate(rotations*360, true);
+		leftMotor.rotate(rotations*360, true);
+		rightMotor.rotate(rotations*360, true);
 		if(brakeAtEnd) {
-			leftWheel.stop(true);
-			rightWheel.stop(true);
+			leftMotor.stop(true);
+			rightMotor.stop(true);
 		}
 	}
 
@@ -58,15 +58,15 @@ public abstract class MoveTank {
 	 * @param brakeAtEnd
 	 */
 	public static void onForDegrees(int leftSpeed, int rightSpeed, int degrees, boolean brakeAtEnd) {
-		leftWheel.setSpeed(leftSpeed);
-		rightWheel.setSpeed(rightSpeed);
+		leftMotor.setSpeed(leftSpeed);
+		rightMotor.setSpeed(rightSpeed);
 //		move(leftSpeed, rightSpeed);
 //		Delay.msDelay((degrees/leftSpeed)*1000);
-		leftWheel.rotate(degrees, true);
-		rightWheel.rotate(degrees, true);
+		leftMotor.rotate(degrees, true);
+		rightMotor.rotate(degrees, true);
 		if(brakeAtEnd) {
-			leftWheel.stop(true);
-			rightWheel.stop(true);
+			leftMotor.stop(true);
+			rightMotor.stop(true);
 		}
 	}
 
@@ -77,13 +77,13 @@ public abstract class MoveTank {
 	 * @param brakeAtEnd
 	 */
 	public static void onForSeconds(int leftSpeed, int rightSpeed, int seconds, boolean brakeAtEnd) {
-		leftWheel.setSpeed(leftSpeed);
-		rightWheel.setSpeed(rightSpeed);
+		leftMotor.setSpeed(leftSpeed);
+		rightMotor.setSpeed(rightSpeed);
 		move(leftSpeed, rightSpeed);
 		Delay.msDelay(seconds*1000);
 		if(brakeAtEnd) {
-			leftWheel.stop(true);
-			rightWheel.stop(true);
+			leftMotor.stop(true);
+			rightMotor.stop(true);
 		}
 	}
 
@@ -94,13 +94,13 @@ public abstract class MoveTank {
 	 * @param brakeAtEnd
 	 */
 	public static void onForCent(int leftSpeed, int rightSpeed, double distance, boolean brakeAtEnd) {
-		leftWheel.setSpeed(leftSpeed);
-		rightWheel.setSpeed(rightSpeed);
+		leftMotor.setSpeed(leftSpeed);
+		rightMotor.setSpeed(rightSpeed);
 		move(leftSpeed, rightSpeed);
 		Delay.msDelay((long)((distance/leftSpeed)*1000));
 		if(brakeAtEnd) {
-			leftWheel.stop(true);
-			rightWheel.stop(true);
+			leftMotor.stop(true);
+			rightMotor.stop(true);
 		}
 	}
 
@@ -110,8 +110,8 @@ public abstract class MoveTank {
 	 * @param rightSpeed
 	 */
 	public static void on(int leftSpeed, int rightSpeed) {
-		leftWheel.setSpeed(leftSpeed);
-		rightWheel.setSpeed(rightSpeed);
+		leftMotor.setSpeed(leftSpeed);
+		rightMotor.setSpeed(rightSpeed);
 		move(leftSpeed, rightSpeed);
 	}
 
@@ -119,16 +119,16 @@ public abstract class MoveTank {
 	 * Stops the motors.
 	 */
 	public static void off() {
-		leftWheel.stop(true);
-		rightWheel.stop(true);
+		leftMotor.stop(true);
+		rightMotor.stop(true);
 	}
 
 	/**
 	 * Use when the motor is no longer needed.
 	 */
 	public static void close() {
-		leftWheel.close();
-		rightWheel.close();
+		leftMotor.close();
+		rightMotor.close();
 	}
 
 }

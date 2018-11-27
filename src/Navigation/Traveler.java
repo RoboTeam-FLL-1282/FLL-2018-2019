@@ -1,12 +1,15 @@
 package Navigation;
 
-import EV3.Controller;
 import EV3.MoveTank;
 
 public class Traveler {
 	
 	double currentX;
 	double currentY;
+	double TrackWidth = Double.NaN;
+	double WheelDiameter = Double.NaN;
+	
+	public Traveler() {}
 	
 	/**
 	 * @param startX - The beginning X position. 
@@ -16,16 +19,46 @@ public class Traveler {
 		currentX = startX;
 		currentY = startY;
 	}
+	
+	/**
+	 * 
+	 * @param startX - The beginning X position. 
+	 * @param startY - The beginning Y position.
+	 * @param TrackWidth - The robot width.
+	 * @param WheelDiameter - The wheel diameter.
+	 */
+	public Traveler(double startX, double startY, double TrackWidth, double WheelDiameter) {
+		currentX = startX;
+		currentY = startY;
+		this.TrackWidth = TrackWidth;
+		this.WheelDiameter = WheelDiameter;
+	}
 
 	/**
+	 * @param TrackWidth - The robot width.
+	 * @param WheelDiameter - The wheel diameter.
+	 */
+	public void setRobotDetails(double TrackWidth, double WheelDiameter) {
+		this.TrackWidth = TrackWidth;
+		this.WheelDiameter = WheelDiameter;
+	}
+	
+	/**
+	 * @param X - A x position.
+	 * @param Y - A y position.
+	 */
+	public void setPosition(double X, double Y) {
+		currentX = X;
+		currentY = Y;
+	}
+	
+	/**
 	 * Turns in spot according to a specific angle.
-	 * @param wheelDiameter
-	 * @param trackWidth
 	 * @param angle
 	 * @param speed
 	 */
-	public static void turnInSpot(double angle, int speed) {
-		double angleToTurn = Controller.getTrackWidth() * angle / Controller.getWheelDiameter();
+	public void turnInSpot(double angle, int speed) {
+		double angleToTurn = TrackWidth * angle / WheelDiameter;
 		MoveTank.onForDegrees(-1*speed, speed, (int)angleToTurn, true);
 	}
 	
