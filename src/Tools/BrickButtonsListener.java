@@ -3,8 +3,6 @@ package Tools;
 import EV3.Buttons;
 
 public interface BrickButtonsListener {
-
-	public static boolean run = true;
 	
 	public void onPress(Buttons button);
 	
