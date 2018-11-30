@@ -34,6 +34,7 @@ public class SelectMenu implements Runnable{
 	 * Show the menu.
 	 */
 	public void show() {
+		run = true;
 		t.start();
 	}
 	
