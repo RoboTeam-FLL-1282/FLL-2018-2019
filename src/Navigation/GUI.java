@@ -1,6 +1,7 @@
 package Navigation;
 
 import java.awt.BasicStroke;
+import java.awt.Button;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -8,11 +9,14 @@ import java.awt.Image;
 import java.awt.Polygon;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -30,6 +34,10 @@ public class GUI extends JPanel implements MouseMotionListener, MouseListener{
 	int draggedOne = 0;
 	int mouseX = 0;
 	int mouseY = 0;
+	
+	Button save = new Button("save");
+	
+	LinkedList<Point> splinePoints = new LinkedList<>();
 
 	public GUI() {
 		this.addMouseMotionListener(this);
@@ -38,14 +46,26 @@ public class GUI extends JPanel implements MouseMotionListener, MouseListener{
 		intoOrbit.getHeight(this);
 		wait(1000);
 		frame = new JFrame("Hermite Spline");
-		frame.add(this);
 		frame.setSize(intoOrbit.getWidth(this)*m + 15, intoOrbit.getHeight(this)*m + 100);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		repaint();
 		for(int i = 0; i<3; i++) {
 			points.add(new Point(0, intoOrbit.getHeight(this)*m));
 		}
+		save.setBounds(10, 583, 100, 50);
+		save.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for(int i = 0; i<splinePoints.size(); i++) {
+					System.out.println(i + ".	" + splinePoints.get(i).x + ", " + splinePoints.get(i).y);
+				}
+			}
+		});
+		save.setVisible(true);
+		frame.add(save);
+		frame.add(this);
+		repaint();
 	}
 
 	private double calculate_distance_between_points(Point point1, Point point2) {
@@ -72,6 +92,8 @@ public class GUI extends JPanel implements MouseMotionListener, MouseListener{
 
 	@Override
 	public void paint(Graphics g) {
+		
+		splinePoints = new LinkedList<>();
 
 		p.reset();
 
@@ -103,6 +125,7 @@ public class GUI extends JPanel implements MouseMotionListener, MouseListener{
 
 				for(double i = 0; i<=1; i+=0.0001) {
 					p.addPoint((int)si.interpolate_X(i), (int)si.interpolate_Y(i));
+					splinePoints.add(new Point(si.interpolate_X(i), si.interpolate_Y(i)));
 				}
 				g2d.setStroke(new BasicStroke(3));
 				g2d.drawPolyline(p.xpoints, p.ypoints, p.npoints);
