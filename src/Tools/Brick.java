@@ -8,9 +8,19 @@ public class Brick extends Thread {
 	public boolean run = true;
 	BrickButtonsListener object;
 
+	/**
+	 * @param object
+	 */
 	public void addBrickButtonsListener(BrickButtonsListener object) {
 		this.object = object;
 		start();
+	}
+	
+	/**
+	 *  Stops the listener.
+	 */
+	public void closeListener() {
+		run = false;
 	}
 	
 	@Override
