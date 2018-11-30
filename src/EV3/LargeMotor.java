@@ -36,13 +36,10 @@ public class LargeMotor {
 	 */
 	public void onForRotations(int speed, int rotations, boolean brakeAtEnd) {
 		
-//		move(speed);	// Starts rotation.
-//
-//		// Wait:
-//		Delay.msDelay(((rotations*360)/speed)*1000);
+		move(speed);	// Starts rotation.
 
-		motor.setSpeed(speed);
-		motor.rotate(rotations*360);
+		// Wait:
+		Delay.msDelay(((rotations*360)/speed)*1000);
 		
 		// Break at end?
 		if(brakeAtEnd) {
@@ -58,13 +55,10 @@ public class LargeMotor {
 	 */
 	public void onForDegrees(int speed, int degrees, boolean brakeAtEnd) {
 
-//		move(speed);	// Starts rotation.
-//
-//		// Wait:
-//		Delay.msDelay((degrees/speed)*1000);
+		move(speed);	// Starts rotation.
 
-		motor.setSpeed(speed);
-		motor.rotate(degrees);
+//		// Wait:
+		Delay.msDelay((degrees/speed)*1000);
 		
 		// Break at end?
 		if(brakeAtEnd) {

@@ -41,10 +41,8 @@ public abstract class MoveTank {
 	public static void onForRotations(int leftSpeed, int rightSpeed, int rotations, boolean brakeAtEnd) {
 		leftMotor.setSpeed(leftSpeed);
 		rightMotor.setSpeed(rightSpeed);
-//		move(leftSpeed, rightSpeed);
-//		Delay.msDelay(((rotations*360)/leftSpeed)*1000);
-		leftMotor.rotate(rotations*360, true);
-		rightMotor.rotate(rotations*360, true);
+		move(leftSpeed, rightSpeed);
+		Delay.msDelay(((rotations*360)/leftSpeed)*1000);
 		if(brakeAtEnd) {
 			leftMotor.stop(true);
 			rightMotor.stop(true);
@@ -60,10 +58,8 @@ public abstract class MoveTank {
 	public static void onForDegrees(int leftSpeed, int rightSpeed, int degrees, boolean brakeAtEnd) {
 		leftMotor.setSpeed(leftSpeed);
 		rightMotor.setSpeed(rightSpeed);
-//		move(leftSpeed, rightSpeed);
-//		Delay.msDelay((degrees/leftSpeed)*1000);
-		leftMotor.rotate(degrees, true);
-		rightMotor.rotate(degrees, true);
+		move(leftSpeed, rightSpeed);
+		Delay.msDelay((degrees/leftSpeed)*1000);
 		if(brakeAtEnd) {
 			leftMotor.stop(true);
 			rightMotor.stop(true);

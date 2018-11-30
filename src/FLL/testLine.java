@@ -5,7 +5,6 @@ import EV3.Buttons;
 import EV3.ColorSensor;
 import EV3.Ports;
 import Tools.Alert;
-import Motion.BlackLineAlignment;
 
 public class testLine {
 
@@ -18,7 +17,7 @@ public class testLine {
 		while(!BrickButtons.isPressed(Buttons.CENTER)) {
 			Alert.notify("value: "+sens.reflectedLight());	
 		}
-		double blackValue = sens.reflectedLight();
+//		double blackValue = sens.reflectedLight();
 		
 		
 //		BlackLineAlignment align = new BlackLineAlignment();

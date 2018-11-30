@@ -35,12 +35,10 @@ public class MediumMotor {
 	 */
 	public void onForRotations(int speed, int rotations, boolean brakeAtEnd) {
 		
-//		move(speed);
-//		
-//		// Wait:
-//		Delay.msDelay(((rotations*360)/speed)*1000);
-
-		motor.rotate(rotations*360);
+		move(speed);
+		
+		// Wait:
+		Delay.msDelay(((rotations*360)/speed)*1000);
 		
 		// Break at end?
 		if(brakeAtEnd) {
@@ -56,12 +54,10 @@ public class MediumMotor {
 	 */
 	public void onForDegrees(int speed, int degrees, boolean brakeAtEnd) {
 
-//		move(speed);
-//		
-//		// Wait:
-//		Delay.msDelay((degrees/speed)*1000);
-
-		motor.rotate(degrees);
+		move(speed);
+		
+		// Wait:
+		Delay.msDelay((degrees/speed)*1000);
 		
 		// Break at end?
 		if(brakeAtEnd) {
