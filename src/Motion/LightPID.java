@@ -1,6 +1,6 @@
 package Motion;
 
-public class LightPID extends PID implements Runnable{
+public class LightPID extends Thread {
 
 	 ///////////////////////////////////////
 	 // Still empty... /////////////////////

@@ -1,8 +1,6 @@
 package FLL;
 import EV3.*;
-import Motion.PID;
-import Motion.Types;
-
+import Motion.GyroPID;
 public class test{
 	
 	public static void main(String[] args) {
@@ -11,11 +9,11 @@ public class test{
 
 		MoveTank.setMainMotors(Ports.A, Ports.D);
 		
-		PID pid = new PID(0, 1, 1, 1);
+		GyroPID pid = new GyroPID(0, 1, 1, 1);
 				
 		BrickButtons.waitForAnyPress();
 		
-		pid.startPID(Types.GyroMode);
+		pid.startPID();
 		BrickButtons.waitForAnyPress();
 		pid.stopPID();	
 	

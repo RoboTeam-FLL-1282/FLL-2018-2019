@@ -33,6 +33,7 @@ public class PortView implements Runnable{
 	@Override
 	public void run() {
 		while(run) {
+			Alert.deleteAll();
 			Alert.view("1. US", u.distance());
 			Alert.view("2. Color", c1.reflectedLight());
 			Alert.view("3. Gyro", g.angle());

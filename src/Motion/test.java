@@ -1,7 +1,5 @@
 package Motion;
 import EV3.*;
-import Motion.PID;
-import Motion.Types;
 public class test {
 
 	static double[] k = {1, 1, 1};
@@ -13,8 +11,8 @@ public class test {
 		Display.setScreen();
 		setK();
 
-		PID pid  = new PID(0, k[0], k[1], k[2]);
-		pid.startPID(Types.GyroMode);
+		GyroPID pid  = new GyroPID(0, k[0], k[1], k[2]);
+		pid.startPID();
 		Wait.time(20000);
 		pid.stopPID();
 

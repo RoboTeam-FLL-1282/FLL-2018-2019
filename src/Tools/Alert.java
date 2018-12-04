@@ -60,4 +60,12 @@ public abstract class Alert {
 		line+=30;
 	}
 	
+	/**
+	 * Deletes all of the names and values and clears the screen.
+	 */
+	public static void deleteAll() {
+		Display.resetScreen();
+		line = 0;
+	}
+	
 }
