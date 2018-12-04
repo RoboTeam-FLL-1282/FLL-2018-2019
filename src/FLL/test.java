@@ -1,13 +1,12 @@
 package FLL;
 import EV3.*;
 import Motion.GyroPID;
+import Tools.Default;
 public class test{
 	
 	public static void main(String[] args) {
-		
-		Display.setScreen();
 
-		MoveTank.setMainMotors(Ports.A, Ports.D);
+		Default.settings();
 		
 		GyroPID pid = new GyroPID(0, 1, 1, 1);
 				
