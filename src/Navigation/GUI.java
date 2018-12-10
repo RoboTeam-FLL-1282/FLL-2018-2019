@@ -3,6 +3,7 @@ package Navigation;
 import java.awt.BasicStroke;
 import java.awt.Button;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -27,7 +28,7 @@ public class GUI extends JPanel implements MouseMotionListener, MouseListener{
 	ArrayList<Point> points = new ArrayList<Point>();
 	JFrame frame;
 	HermiteSpline si;
-	Image intoOrbit = getImage("intoOrbit.jpg");
+	Image intoOrbit = getImage("_intoOrbit.jpg");
 	int m = 1;
 	Polygon p = new Polygon();
 	boolean dragged = false;
@@ -52,7 +53,7 @@ public class GUI extends JPanel implements MouseMotionListener, MouseListener{
 		for(int i = 0; i<3; i++) {
 			points.add(new Point(0, intoOrbit.getHeight(this)*m));
 		}
-		save.setBounds(10, 583, 100, 50);
+		save.setBounds(10, 576, 100, 50);
 		save.addActionListener(new ActionListener() {
 			
 			@Override
@@ -101,6 +102,10 @@ public class GUI extends JPanel implements MouseMotionListener, MouseListener{
 
 		g2d.setColor(Color.LIGHT_GRAY);
 		g2d.fillRect(0, 0, getWidth(), getHeight());
+		
+		g2d.setFont(new Font("Arial", Font.ITALIC, 20));
+		g2d.setColor(Color.DARK_GRAY);
+		g2d.drawString("1 px : 2 cm", 1055, 595);
 		
 		g2d.drawImage(intoOrbit, 0, 0, intoOrbit.getWidth(this)*m, intoOrbit.getHeight(this)*m, this);
 		
