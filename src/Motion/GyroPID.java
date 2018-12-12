@@ -3,7 +3,7 @@ import EV3.*;
 import lejos.hardware.port.Port;
 public class GyroPID extends Thread {
 
-	GyroSensor g = new GyroSensor(Ports.S3);
+	public GyroSensor g = new GyroSensor(Ports.S3);
 
 	// Members:
 	PID pid = new PID();	
@@ -33,6 +33,7 @@ public class GyroPID extends Thread {
 	 * @param target - The PID target
 	 */
 	public void setTarget(double target) {
+		pid.reset();
 		pid.setTarget(target);
 	}
 
@@ -51,14 +52,14 @@ public class GyroPID extends Thread {
 	public void setBaseSpeed(double baseSpeed) {
 		pid.setBaseSpeed(baseSpeed);
 	}
-	
+
 	/**
 	 * @param seconds - The time to wait between each calculation.
 	 */
 	public void setTime(double seconds) {
 		pid.setTime(seconds);
 	}
-	
+
 	/**
 	 * @param port - The Gyro port (default: port 3).
 	 */
@@ -71,8 +72,13 @@ public class GyroPID extends Thread {
 	 * The robot will start moving until the stopPID will be called.
 	 */
 	public void startPID() {
-		run = true;
-		start();
+		if(run) {
+			run = true;
+			start();
+		} 
+		else {
+			run = true;
+		}
 	}
 
 	/**
@@ -88,21 +94,34 @@ public class GyroPID extends Thread {
 	@Override
 	public void run() {
 		while(run) {
-			double turn = pid.calculateTurn(g.angle());
-			double leftSpeed  = pid.baseSpeed + turn;
-			double rightSpeed = pid.baseSpeed - turn;
-			display(turn, leftSpeed, rightSpeed); // Not necessary 
+			double gyroValue = g.angle();
+			double turn = pid.calculateTurn(gyroValue);
+			double leftSpeed;
+			double rightSpeed;
+			if(pid.baseSpeed > 0) {
+				leftSpeed  = pid.baseSpeed - turn;
+				rightSpeed = pid.baseSpeed + turn;
+			}
+			else {
+				leftSpeed  = pid.baseSpeed + turn;
+				rightSpeed = pid.baseSpeed - turn;
+			}
+			display(turn, leftSpeed, rightSpeed, gyroValue); // Not necessary 
 			MoveTank.on((int)leftSpeed, (int)rightSpeed);
 			Wait.time((int)(pid.time*1000));
+			while(!run) {
+				Wait.time(100);
+			}
 		}
 	}
 
 	// For debugging...
-	private void display(double turn, double leftSpeed, double rightSpeed) {
+	private void display(double turn, double leftSpeed, double rightSpeed, double gyro) {
 		Display.resetScreen();
 		Display.text("Turn: " + turn, 0, 10);
-		Display.text("Left: " + leftSpeed, 0, 50);
-		Display.text("Right: " + rightSpeed, 0, 90);
+		Display.text("Left: " + leftSpeed, 0, 30);
+		Display.text("Right: " + rightSpeed, 0, 50);
+		Display.text("Gyro: " + gyro, 0, 70);
 	}
 
 }

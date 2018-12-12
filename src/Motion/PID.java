@@ -20,6 +20,16 @@ public class PID {
 	double lastError = 0;
 	
 	/**
+	 * Reset all PID value.
+	 */
+	public void reset() {
+		lastError = 0;
+		lastReset = 0;
+		error = 0;
+		reset = 0;
+	}
+	
+	/**
 	 * @param target - The PID target
 	 */
 	public void setTarget(double target) {

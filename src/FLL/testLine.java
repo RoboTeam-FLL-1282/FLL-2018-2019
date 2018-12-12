@@ -1,29 +1,27 @@
 package FLL;
 
 import EV3.BrickButtons;
-import EV3.Buttons;
-import EV3.ColorSensor;
 import EV3.Ports;
-import Tools.Alert;
+import Motion.Aligner;
+import Motion.BlackLineAlignment;
+import Motion.WhiteLineAlignment;
+import Tools.Default;
 
 public class testLine {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
-		ColorSensor sens = new ColorSensor(Ports.S3);
-		sens.setReflectedLightMode();
 		
-		while(!BrickButtons.isPressed(Buttons.CENTER)) {
-			Alert.notify("value: "+sens.reflectedLight());	
-		}
-//		double blackValue = sens.reflectedLight();
+		double whiteValue = 0.9;
+		double blackValue = 0.08;
 		
-		
-//		BlackLineAlignment align = new BlackLineAlignment();
-//		align.setBlackValue(blackValue);
-//		
-//		align.align(360, Ports.A, Ports.D);
+		Default.settings();
+		Aligner.setSensorsPorts(Ports.S2, Ports.S4);
+		Aligner.setWhiteValue(whiteValue);
+		Aligner.setBlackValue(blackValue);
+		BrickButtons.waitForAnyPress();
+		WhiteLineAlignment.align(100);
+		BlackLineAlignment.align(100);
 	}
 
 }

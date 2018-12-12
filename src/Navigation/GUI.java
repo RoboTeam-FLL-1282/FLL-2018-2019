@@ -1,7 +1,6 @@
 package Navigation;
 
 import java.awt.BasicStroke;
-import java.awt.Button;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -10,8 +9,6 @@ import java.awt.Image;
 import java.awt.Polygon;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -35,14 +32,10 @@ public class GUI extends JPanel implements MouseMotionListener, MouseListener{
 	int draggedOne = 0;
 	int mouseX = 0;
 	int mouseY = 0;
-	
-	Button save = new Button("save");
-	
+
 	LinkedList<Point> splinePoints = new LinkedList<>();
 
-	public GUI() {
-		this.addMouseMotionListener(this);
-		this.addMouseListener(this);
+	public GUI(boolean addListeners) {
 		intoOrbit.getWidth(this);
 		intoOrbit.getHeight(this);
 		wait(1000);
@@ -50,23 +43,19 @@ public class GUI extends JPanel implements MouseMotionListener, MouseListener{
 		frame.setSize(intoOrbit.getWidth(this)*m + 15, intoOrbit.getHeight(this)*m + 100);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		for(int i = 0; i<3; i++) {
-			points.add(new Point(0, intoOrbit.getHeight(this)*m));
-		}
-		save.setBounds(10, 576, 100, 50);
-		save.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				for(int i = 0; i<splinePoints.size(); i++) {
-					System.out.println(i + ".	" + splinePoints.get(i).x + ", " + splinePoints.get(i).y);
-				}
-			}
-		});
-		save.setVisible(true);
-		frame.add(save);
 		frame.add(this);
+		if (addListeners) {
+			this.addMouseMotionListener(this);
+			this.addMouseListener(this);
+			createStartPoints(0, intoOrbit.getHeight(this));
+		}
 		repaint();
+	}
+
+	public void createStartPoints(int x, int y) {
+		for(int i = 0; i<2; i++) {
+			points.add(new Point(x, y));
+		}
 	}
 
 	private double calculate_distance_between_points(Point point1, Point point2) {
@@ -87,13 +76,13 @@ public class GUI extends JPanel implements MouseMotionListener, MouseListener{
 		return tempImage;
 	}
 
-	private void wait(int milliSeconds) {
+	public void wait(int milliSeconds) {
 		try {Thread.sleep(milliSeconds);} catch(Exception e) {}
 	}
 
 	@Override
 	public void paint(Graphics g) {
-		
+
 		splinePoints = new LinkedList<>();
 
 		p.reset();
@@ -102,29 +91,29 @@ public class GUI extends JPanel implements MouseMotionListener, MouseListener{
 
 		g2d.setColor(Color.LIGHT_GRAY);
 		g2d.fillRect(0, 0, getWidth(), getHeight());
-		
+
 		g2d.setFont(new Font("Arial", Font.ITALIC, 20));
 		g2d.setColor(Color.DARK_GRAY);
 		g2d.drawString("1 px : 2 cm", 1055, 595);
-		
+
 		g2d.drawImage(intoOrbit, 0, 0, intoOrbit.getWidth(this)*m, intoOrbit.getHeight(this)*m, this);
-		
+
 		g2d.setStroke(new BasicStroke(4));
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
 
 		g2d.setColor(Color.red);
-		for(int i = 3; i<points.size(); i++) {
+		for(int i = 2; i<points.size(); i++) {
 			if(i>0)
 				g2d.drawLine((int)points.get(i-1).x, (int)points.get(i-1).y, (int)points.get(i).x, (int)points.get(i).y);
 		}
-		
+
 		g2d.setColor(Color.black);
-		for(int i = 3; i<points.size(); i++) {
+		for(int i = 2; i<points.size(); i++) {
 			g2d.fillOval((int)points.get(i).x-10, (int)points.get(i).y-10, 20, 20);
 		}
 
 		try {
-			if(points.size() > 3) {
+			if(points.size() > 2) {
 				si = new HermiteSpline(points);
 				g2d.setColor(Color.green);
 
@@ -140,7 +129,7 @@ public class GUI extends JPanel implements MouseMotionListener, MouseListener{
 
 	public static void main(String[] args) {
 
-		new GUI();
+		new GUI(true);
 
 	}
 
@@ -179,7 +168,7 @@ public class GUI extends JPanel implements MouseMotionListener, MouseListener{
 
 		if(!dragged && SwingUtilities.isLeftMouseButton(e))
 			points.add(new Point(e.getX(), e.getY()));
-		
+
 		else if(mouseX == e.getX() && mouseY == e.getY()) {
 			if(SwingUtilities.isLeftMouseButton(e))
 				points.add(new Point(e.getX(), e.getY()));

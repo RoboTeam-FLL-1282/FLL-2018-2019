@@ -1,9 +1,7 @@
 package Motion;
 
-import EV3.ColorSensor;
 import EV3.MoveTank;
 import Tools.Alert;
-import lejos.hardware.port.Port;
 
 public class BlackLineAlignment {
 
@@ -24,30 +22,28 @@ public class BlackLineAlignment {
 	 * @param leftPort
 	 * @param rightPort
 	 */
-	public static void align(int speed, Port leftPort, Port rightPort) {
+	public static void align(int speed) {
+		
+		blackValue = Aligner.blackValue;
 		
 		if(blackValue == Double.NaN) {
 			Alert.notify("The black value is not set!");
 		}
 		
-		ColorSensor leftSensor = new ColorSensor(leftPort);
-		leftSensor.setReflectedLightMode();
-		ColorSensor rightSensor = new ColorSensor(rightPort);
-		rightSensor.setReflectedLightMode();
-		while(leftSensor.reflectedLight()>blackValue && rightSensor.reflectedLight()>blackValue) {
+		while(Aligner.leftSensor.reflectedLight()>blackValue && Aligner.rightSensor.reflectedLight()>blackValue) {
 			MoveTank.on(speed, speed);
 		}
 
-		if(leftSensor.reflectedLight()<blackValue) {
-			while(rightSensor.reflectedLight()>blackValue) {
-				MoveTank.on(0, speed);
+		if(Aligner.leftSensor.reflectedLight()<blackValue) {
+			while(Aligner.rightSensor.reflectedLight()>blackValue) {
+				MoveTank.on(speed, 0);
 			}
 			MoveTank.off();
 
 		}
 		else {
-			while(leftSensor.reflectedLight()>blackValue) {
-				MoveTank.on(speed, 0);
+			while(Aligner.leftSensor.reflectedLight()>blackValue) {
+				MoveTank.on(0, speed);
 			}
 			MoveTank.off();
 		}
