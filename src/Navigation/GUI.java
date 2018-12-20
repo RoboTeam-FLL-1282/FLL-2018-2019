@@ -35,19 +35,21 @@ public class GUI extends JPanel implements MouseMotionListener, MouseListener{
 
 	LinkedList<Point> splinePoints = new LinkedList<>();
 
+	boolean simulates = false;
+
 	public GUI(boolean addListeners) {
 		intoOrbit.getWidth(this);
 		intoOrbit.getHeight(this);
 		wait(1000);
 		frame = new JFrame("Hermite Spline");
 		frame.setSize(intoOrbit.getWidth(this)*m + 15, intoOrbit.getHeight(this)*m + 100);
-		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(this);
 		if (addListeners) {
 			this.addMouseMotionListener(this);
 			this.addMouseListener(this);
 			createStartPoints(0, intoOrbit.getHeight(this));
+			frame.setVisible(true);
 		}
 		repaint();
 	}
@@ -76,16 +78,12 @@ public class GUI extends JPanel implements MouseMotionListener, MouseListener{
 		return tempImage;
 	}
 
-	public void wait(int milliSeconds) {
+	public static void wait(int milliSeconds) {
 		try {Thread.sleep(milliSeconds);} catch(Exception e) {}
 	}
 
 	@Override
 	public void paint(Graphics g) {
-
-		splinePoints = new LinkedList<>();
-
-		p.reset();
 
 		Graphics2D g2d = (Graphics2D)g;
 
@@ -98,6 +96,11 @@ public class GUI extends JPanel implements MouseMotionListener, MouseListener{
 
 		g2d.drawImage(intoOrbit, 0, 0, intoOrbit.getWidth(this)*m, intoOrbit.getHeight(this)*m, this);
 
+		if(!simulates) {
+			splinePoints = new LinkedList<>();
+
+			p.reset();
+		}
 		g2d.setStroke(new BasicStroke(4));
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -117,9 +120,11 @@ public class GUI extends JPanel implements MouseMotionListener, MouseListener{
 				si = new HermiteSpline(points);
 				g2d.setColor(Color.green);
 
-				for(double i = 0; i<=1; i+=0.0001) {
-					p.addPoint((int)si.interpolate_X(i), (int)si.interpolate_Y(i));
-					splinePoints.add(new Point(si.interpolate_X(i), si.interpolate_Y(i)));
+				if (!simulates) {
+					for(double i = 0; i<=1; i+=0.001) {
+						p.addPoint((int)si.interpolate_X(i), (int)si.interpolate_Y(i));
+						splinePoints.add(new Point(si.interpolate_X(i), si.interpolate_Y(i)));
+					}
 				}
 				g2d.setStroke(new BasicStroke(3));
 				g2d.drawPolyline(p.xpoints, p.ypoints, p.npoints);
