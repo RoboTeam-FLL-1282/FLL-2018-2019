@@ -2,6 +2,7 @@ package Navigation;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -23,7 +24,7 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
-public class DeadReckoning extends GUI implements MouseListener, MouseMotionListener{
+public class DeadReckoning extends GUI implements MouseListener, MouseMotionListener, ButtonListener{
 
 	// Members:
 	int width = 30;
@@ -46,7 +47,7 @@ public class DeadReckoning extends GUI implements MouseListener, MouseMotionList
 	LinkedList<Double> angles = new LinkedList<>();
 
 	boolean onDrag = false;
-	
+
 	boolean setRobotPosition = true;
 
 	// Fields:
@@ -58,7 +59,7 @@ public class DeadReckoning extends GUI implements MouseListener, MouseMotionList
 	Label yLabel = new Label("Y:");
 	JButton done = new JButton("Done");
 
-	JButton moveRobot = new JButton("Simulate");
+	Button simulate;
 
 
 	public DeadReckoning() {
@@ -70,6 +71,9 @@ public class DeadReckoning extends GUI implements MouseListener, MouseMotionList
 		setSize(frame.getWidth(), frame.getHeight());
 
 		// Set fields:
+
+		simulate = new Button("Simulate", this, this);
+
 		thetaLabel.setBounds(5, intoOrbit.getHeight(this) + 20, 15, 20);
 		thetaLabel.setBackground(Color.LIGHT_GRAY);
 
@@ -85,7 +89,7 @@ public class DeadReckoning extends GUI implements MouseListener, MouseMotionList
 
 		done.setBounds(250, intoOrbit.getHeight(this) + 15, 80, 30);
 
-		moveRobot.setBounds(20, intoOrbit.getHeight(this) + 15, 80, 30);
+		simulate.setBounds(20, intoOrbit.getHeight(this) + 15, 80, 30);
 
 		thetaLabel.setVisible(true);
 		xLabel.setVisible(true);
@@ -96,7 +100,7 @@ public class DeadReckoning extends GUI implements MouseListener, MouseMotionList
 		setY.setVisible(true);
 		done.setVisible(true);
 
-		moveRobot.setVisible(false);
+		simulate.setVisible(false);
 
 		// Set theta fields listeners
 		setTheta.addActionListener(new ActionListener() {
@@ -138,23 +142,11 @@ public class DeadReckoning extends GUI implements MouseListener, MouseMotionList
 				yLabel.setVisible(false);
 				done.setVisible(false);
 
-				moveRobot.setVisible(true);
+				simulate.setVisible(true);
 
 				createStartPoints(x + width/2, y + height/2);
 				repaint();
 				setRobotPosition = false;
-			}
-		});
-
-		moveRobot.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				new Thread() {
-					public void run() {
-						moveVirtualRobot();
-					}
-				}.start();
 			}
 		});
 
@@ -173,15 +165,19 @@ public class DeadReckoning extends GUI implements MouseListener, MouseMotionList
 		add(setY);
 		add(done);
 
-		add(moveRobot);
-
 		setTheta.setBackground(Color.LIGHT_GRAY);
 		setX.setBackground(Color.LIGHT_GRAY);
 		setY.setBackground(Color.LIGHT_GRAY);
 
 		done.setBackground(Color.LIGHT_GRAY);
 
-		moveRobot.setBackground(Color.LIGHT_GRAY);
+		simulate.setBackground(Color.LIGHT_GRAY);
+		simulate.setBorder(Color.GRAY, 1);
+		simulate.setOnMouseOverBackgroundColor(Color.LIGHT_GRAY);
+		simulate.setOnMouseOverBorderColor(Color.DARK_GRAY);
+		simulate.setTextColor(Color.DARK_GRAY);
+		simulate.setFont(new Font("Arial", Font.BOLD, 15));
+
 
 		rect.setBounds(x, y, width, height);
 
@@ -251,6 +247,7 @@ public class DeadReckoning extends GUI implements MouseListener, MouseMotionList
 		setY.setText((int)getAdaptedPoint(x, y).y - height/2 + "");
 
 		repaintComponents();
+		simulate.repaint(g2d);
 
 	}
 
@@ -273,7 +270,7 @@ public class DeadReckoning extends GUI implements MouseListener, MouseMotionList
 		for(int i = 0; i<splinePoints.size()-1; i++) {
 			Point first = getAdaptedPoint((int)splinePoints.get(i).x, (int)splinePoints.get(i).y);
 			Point second = getAdaptedPoint((int)splinePoints.get(i+1).x, (int)splinePoints.get(i+1).y);
-			angles.add(Math.atan((second.x - first.x)/(second.y - first.y)));
+			angles.add(Math.atan2(second.x - first.x, second.y - first.y));
 		}
 
 	}
@@ -293,17 +290,17 @@ public class DeadReckoning extends GUI implements MouseListener, MouseMotionList
 	public void moveVirtualRobot() {
 
 		simulates = true;
-		loadRealAngles();
+		loadAdaptedAngles();
 
-		for(int i = 0; i<angles.size()-1; i++) {
+		for(int i = 0; i<angles.size(); i++) {
 			x = (int)splinePoints.get(i).x - width/2;
 			y = (int)splinePoints.get(i).y - height/2;
 			rect.x = x;
 			rect.y = y;
-			theta = angles.get(i+1);
+			theta = angles.get(i);
 			System.out.println(theta);
 			repaint();
-			wait(10);
+			wait(70);
 		}
 
 		x = (int)splinePoints.get(splinePoints.size()-1).x - width/2;
@@ -311,7 +308,7 @@ public class DeadReckoning extends GUI implements MouseListener, MouseMotionList
 		rect.x = x;
 		rect.y = y;
 		repaint();
-		
+
 		simulates = false;
 
 	}
@@ -325,24 +322,23 @@ public class DeadReckoning extends GUI implements MouseListener, MouseMotionList
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
+		if(!Button.buttonPressed) {
+			if (!setRobotPosition)
+				super.mousePressed(e);
 
-		if (!setRobotPosition)
-			super.mousePressed(e);
-
-		else {
-			if (new Rectangle(e.getX(), e.getY(), 1, 1).intersects(rect)) {
-				onDrag = true;
+			else {
+				if (new Rectangle(e.getX(), e.getY(), 1, 1).intersects(rect)) {
+					onDrag = true;
+				}
 			}
 		}
 	}
@@ -395,7 +391,28 @@ public class DeadReckoning extends GUI implements MouseListener, MouseMotionList
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		// TODO Auto-generated method stub
+	}
 
+	@Override
+	public void onButtonPressed(Button button) {
+		if(button == simulate) {
+			simulate.setBackground(Color.GRAY);
+			repaint();
+			new Thread() {
+				@Override
+				public void run() {
+					moveVirtualRobot();
+				}
+			}.start();
+		}
+	}
+
+	@Override
+	public void onButtonReleased(Button button) {
+		if(button == simulate) {
+			simulate.setBackground(Color.LIGHT_GRAY);
+			repaint();
+		}
 	}
 
 }

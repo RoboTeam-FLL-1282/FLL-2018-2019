@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 @SuppressWarnings("serial")
-public class GUI extends JPanel implements MouseMotionListener, MouseListener{
+public class GUI extends JPanel implements MouseMotionListener, MouseListener {
 
 	ArrayList<Point> points = new ArrayList<Point>();
 	JFrame frame;
@@ -51,6 +51,7 @@ public class GUI extends JPanel implements MouseMotionListener, MouseListener{
 			createStartPoints(0, intoOrbit.getHeight(this));
 			frame.setVisible(true);
 		}
+
 		repaint();
 	}
 
@@ -121,7 +122,7 @@ public class GUI extends JPanel implements MouseMotionListener, MouseListener{
 				g2d.setColor(Color.green);
 
 				if (!simulates) {
-					for(double i = 0; i<=1; i+=0.001) {
+					for(double i = 0; i<=1; i+=0.004) {
 						p.addPoint((int)si.interpolate_X(i), (int)si.interpolate_Y(i));
 						splinePoints.add(new Point(si.interpolate_X(i), si.interpolate_Y(i)));
 					}
