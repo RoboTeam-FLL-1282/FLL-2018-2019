@@ -49,4 +49,25 @@ static double whiteValue = Double.NaN;
 		}
 	}
 	
+	public static Sides find(int speed) {
+		
+		whiteValue = Aligner.whiteValue;
+		
+		if(whiteValue == Double.NaN) {
+			Alert.notify("The black value is not set!");
+		}
+		
+		while(Aligner.leftSensor.reflectedLight()<whiteValue && Aligner.rightSensor.reflectedLight()<whiteValue) {
+			MoveTank.on(speed, speed);
+		}
+		
+		if(Aligner.leftSensor.reflectedLight() >= whiteValue) {
+			return Sides.LEFT;
+		}
+		
+		else {
+			return Sides.RIGHT;
+		}
+	}
+	
 }
