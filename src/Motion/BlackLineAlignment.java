@@ -48,4 +48,25 @@ public class BlackLineAlignment {
 			MoveTank.off();
 		}
 	}
+	
+	public static Sides find(int speed) {
+		
+		blackValue = Aligner.blackValue;
+		
+		if(blackValue == Double.NaN) {
+			Alert.notify("The black value is not set!");
+		}
+		
+		while(Aligner.leftSensor.reflectedLight()>blackValue && Aligner.rightSensor.reflectedLight()>blackValue) {
+			MoveTank.on(speed, speed);
+		}
+		
+		if(Aligner.leftSensor.reflectedLight() <= blackValue) {
+			return Sides.LEFT;
+		}
+		
+		else {
+			return Sides.RIGHT;
+		}
+	}
 }
