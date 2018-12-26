@@ -1,6 +1,7 @@
 package Motion;
 
 import EV3.MoveTank;
+
 import Tools.Alert;
 
 public class WhiteLineAlignment {
@@ -23,9 +24,8 @@ static double whiteValue = Double.NaN;
 	 * @param rightPort
 	 */
 	public static void align(int speed) {
-		
+	
 		whiteValue = Aligner.whiteValue;
-		
 		if(whiteValue == Double.NaN) {
 			Alert.notify("The black value is not set!");
 		}

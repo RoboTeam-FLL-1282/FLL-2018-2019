@@ -8,8 +8,8 @@ public class Aligner {
 	// Members
 	static double blackValue = 0.08;
 	static double whiteValue = 0.9;
-	static ColorSensor leftSensor;
-	static ColorSensor rightSensor;
+	public static ColorSensor leftSensor;
+	public static ColorSensor rightSensor;
 	
 	/**
 	 * @param blackValue
@@ -35,6 +35,8 @@ public class Aligner {
 		rightSensor = new ColorSensor(rightPort);
 		leftSensor.setReflectedLightMode();
 		rightSensor.setReflectedLightMode();
+		leftSensor.reflectedLight();
+		rightSensor.reflectedLight();
 	}
 	
 }

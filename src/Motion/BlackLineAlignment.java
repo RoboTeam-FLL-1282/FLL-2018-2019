@@ -57,11 +57,11 @@ public class BlackLineAlignment {
 			Alert.notify("The black value is not set!");
 		}
 		
-		while(Aligner.leftSensor.reflectedLight()>blackValue && Aligner.rightSensor.reflectedLight()>blackValue) {
+		while(LineAlignment.precision(Aligner.leftSensor.reflectedLight(), 2)>blackValue && LineAlignment.precision(Aligner.rightSensor.reflectedLight(), 2)>blackValue) {
 			MoveTank.on(speed, speed);
 		}
 		
-		if(Aligner.leftSensor.reflectedLight() <= blackValue) {
+		if(LineAlignment.precision(Aligner.leftSensor.reflectedLight(), 2) <= blackValue) {
 			return Sides.LEFT;
 		}
 		
