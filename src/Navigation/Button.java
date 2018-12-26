@@ -40,7 +40,6 @@ public class Button extends JPanel implements MouseListener, MouseMotionListener
 
 	public static boolean buttonPressed = false;
 
-
 	/**
 	 * @param name - Button's identifier
 	 * @param text - Button's label
@@ -107,7 +106,7 @@ public class Button extends JPanel implements MouseListener, MouseMotionListener
 	 * @param height
 	 */
 	public void setBounds(int x, int y, int width, int height) {
-		rect = new Rectangle(x, y, width, height);
+		this.rect = new Rectangle(x, y, width, height);
 	}
 
 	/**
@@ -137,7 +136,7 @@ public class Button extends JPanel implements MouseListener, MouseMotionListener
 	 * @param color
 	 */
 	public void setOnMouseOverBackgroundColor(Color color) {
-		onMouseOverBackgroundColor = color;
+		this.onMouseOverBackgroundColor = color;
 	}
 
 	/**
@@ -145,7 +144,7 @@ public class Button extends JPanel implements MouseListener, MouseMotionListener
 	 * @param color
 	 */
 	public void setOnMouseOverTextColor(Color color) {
-		onMouseOverTextColor = color;
+		this.onMouseOverTextColor = color;
 	}
 
 	/**
@@ -153,7 +152,7 @@ public class Button extends JPanel implements MouseListener, MouseMotionListener
 	 * @param color
 	 */
 	public void setOnMouseOverBorderColor(Color color) {
-		onMouseOverBorderColor = color;
+		this.onMouseOverBorderColor = color;
 	}
 
 	/**
@@ -161,7 +160,7 @@ public class Button extends JPanel implements MouseListener, MouseMotionListener
 	 * @param color
 	 */
 	public void setBorder(Color color, float thickness) {
-		borderColor = color;
+		this.borderColor = color;
 		this.thickness = thickness;
 	}
 

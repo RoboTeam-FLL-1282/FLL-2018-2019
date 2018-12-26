@@ -122,7 +122,7 @@ public class GUI extends JPanel implements MouseMotionListener, MouseListener {
 				g2d.setColor(Color.green);
 
 				if (!simulates) {
-					for(double i = 0; i<=1; i+=0.004) {
+					for(double i = 0; i<=1; i+=0.005) {
 						p.addPoint((int)si.interpolate_X(i), (int)si.interpolate_Y(i));
 						splinePoints.add(new Point(si.interpolate_X(i), si.interpolate_Y(i)));
 					}

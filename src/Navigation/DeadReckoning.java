@@ -17,8 +17,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.AffineTransform;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.URL;
+import java.util.Formatter;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 import javax.swing.JButton;
 import javax.swing.JTextField;
@@ -27,8 +31,8 @@ import javax.swing.JTextField;
 public class DeadReckoning extends GUI implements MouseListener, MouseMotionListener, ButtonListener{
 
 	// Members:
-	int width = 30;
-	int height = 38;
+	int width = 75;
+	int height = 92;
 	int x = 100;
 	int y = 100;
 	double theta = Math.toRadians(0);
@@ -60,6 +64,8 @@ public class DeadReckoning extends GUI implements MouseListener, MouseMotionList
 	JButton done = new JButton("Done");
 
 	Button simulate;
+	Button save;
+	Button read;
 
 
 	public DeadReckoning() {
@@ -73,6 +79,8 @@ public class DeadReckoning extends GUI implements MouseListener, MouseMotionList
 		// Set fields:
 
 		simulate = new Button("Simulate", this, this);
+		save = new Button("Save", this, this);		
+		read = new Button("Read", this, this);		
 
 		thetaLabel.setBounds(5, intoOrbit.getHeight(this) + 20, 15, 20);
 		thetaLabel.setBackground(Color.LIGHT_GRAY);
@@ -90,6 +98,8 @@ public class DeadReckoning extends GUI implements MouseListener, MouseMotionList
 		done.setBounds(250, intoOrbit.getHeight(this) + 15, 80, 30);
 
 		simulate.setBounds(20, intoOrbit.getHeight(this) + 15, 80, 30);
+		save.setBounds(110, intoOrbit.getHeight(this) + 15, 80, 30);
+		read.setBounds(200, intoOrbit.getHeight(this) + 15, 80, 30);
 
 		thetaLabel.setVisible(true);
 		xLabel.setVisible(true);
@@ -101,6 +111,8 @@ public class DeadReckoning extends GUI implements MouseListener, MouseMotionList
 		done.setVisible(true);
 
 		simulate.setVisible(false);
+		save.setVisible(false);
+		read.setVisible(false);
 
 		// Set theta fields listeners
 		setTheta.addActionListener(new ActionListener() {
@@ -143,6 +155,8 @@ public class DeadReckoning extends GUI implements MouseListener, MouseMotionList
 				done.setVisible(false);
 
 				simulate.setVisible(true);
+				save.setVisible(true);
+				read.setVisible(true);
 
 				createStartPoints(x + width/2, y + height/2);
 				repaint();
@@ -177,6 +191,20 @@ public class DeadReckoning extends GUI implements MouseListener, MouseMotionList
 		simulate.setOnMouseOverBorderColor(Color.DARK_GRAY);
 		simulate.setTextColor(Color.DARK_GRAY);
 		simulate.setFont(new Font("Arial", Font.BOLD, 15));
+
+		save.setBackground(Color.LIGHT_GRAY);
+		save.setBorder(Color.GRAY, 1);
+		save.setOnMouseOverBackgroundColor(Color.LIGHT_GRAY);
+		save.setOnMouseOverBorderColor(Color.DARK_GRAY);
+		save.setTextColor(Color.DARK_GRAY);
+		save.setFont(new Font("Arial", Font.BOLD, 15));
+		
+		read.setBackground(Color.LIGHT_GRAY);
+		read.setBorder(Color.GRAY, 1);
+		read.setOnMouseOverBackgroundColor(Color.LIGHT_GRAY);
+		read.setOnMouseOverBorderColor(Color.DARK_GRAY);
+		read.setTextColor(Color.DARK_GRAY);
+		read.setFont(new Font("Arial", Font.BOLD, 15));
 
 
 		rect.setBounds(x, y, width, height);
@@ -248,6 +276,8 @@ public class DeadReckoning extends GUI implements MouseListener, MouseMotionList
 
 		repaintComponents();
 		simulate.repaint(g2d);
+		save.repaint(g2d);
+		read.repaint(g2d);
 
 	}
 
@@ -311,6 +341,72 @@ public class DeadReckoning extends GUI implements MouseListener, MouseMotionList
 
 		simulates = false;
 
+	}
+
+	public void saveLocaly() {
+
+		Scanner input = new Scanner(System.in);
+		System.out.println("Add tag for your files: ");
+		String tag = input.nextLine();
+
+		loadAdaptedAngles();
+
+		try {
+			Formatter xs = new Formatter("C:\\Users\\OWNER\\git\\repository\\FLL 2018-2019\\Data\\x-" + tag);
+			Formatter ys = new Formatter("C:\\Users\\OWNER\\git\\repository\\FLL 2018-2019\\Data\\y-" + tag);
+			Formatter angles = new Formatter("C:\\Users\\OWNER\\git\\repository\\FLL 2018-2019\\Data\\angles-" + tag);
+
+			for(int i = 0; i<splinePoints.size(); i++) {
+				Point adaptedPoint = getAdaptedPoint((int)splinePoints.get(i).x, (int)splinePoints.get(i).y);
+				xs.format("%s", adaptedPoint.x + "\r\n");
+				ys.format("%s", adaptedPoint.y + "\r\n");
+			}
+
+			for(int i = 0; i<this.angles.size(); i++) {
+				angles.format("%s", this.angles.get(i) + "\r\n");
+			}
+
+			xs.close();
+			ys.close();
+			angles.close();
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			input.close();
+		}
+	}
+
+	public void read() { 
+
+		p.reset();
+		
+		Scanner input = new Scanner(System.in);
+		System.out.println("Insert file's tag: ");
+		String tag = input.nextLine();
+
+		File xs = new File("C:\\\\Users\\\\OWNER\\\\git\\\\repository\\\\FLL 2018-2019\\\\Data\\\\x-" + tag);
+		File ys = new File("C:\\\\Users\\\\OWNER\\\\git\\\\repository\\\\FLL 2018-2019\\\\Data\\\\y-" + tag);
+		File angles = new File("C:\\\\Users\\\\OWNER\\\\git\\\\repository\\\\FLL 2018-2019\\\\Data\\\\angles-" + tag);
+
+		try {
+			Scanner xSacn = new Scanner(xs);
+			Scanner ySacn = new Scanner(ys);
+			Scanner anglesSacn = new Scanner(angles);
+			
+			while(xSacn.hasNext()) {
+				splinePoints.add(new Point((int)Double.parseDouble(xSacn.next()), (int)Double.parseDouble(ySacn.next())));
+			}
+						
+			input.close();
+			xSacn.close();
+			ySacn.close();
+			anglesSacn.close();
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -405,12 +501,44 @@ public class DeadReckoning extends GUI implements MouseListener, MouseMotionList
 				}
 			}.start();
 		}
+
+		else if(button == save) {
+			save.setBackground(Color.GRAY);
+			repaint();
+			new Thread() {
+				@Override
+				public void run() {
+					saveLocaly();
+				}
+			}.start();
+		}
+		
+		else if(button == read) {
+			read.setBackground(Color.GRAY);
+			repaint();
+			new Thread() {
+				@Override
+				public void run() {
+					read();
+				}
+			}.start();
+		}
 	}
 
 	@Override
 	public void onButtonReleased(Button button) {
 		if(button == simulate) {
 			simulate.setBackground(Color.LIGHT_GRAY);
+			repaint();
+		}
+
+		else if(button == save) {
+			save.setBackground(Color.LIGHT_GRAY);
+			repaint();
+		}
+		
+		else if(button == read) {
+			read.setBackground(Color.LIGHT_GRAY);
 			repaint();
 		}
 	}
