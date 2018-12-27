@@ -58,8 +58,8 @@ public class Traveler {
 	 * @param speed
 	 */
 	public void turnInSpot(double angle, int speed) {
-		double angleToTurn = TrackWidth * angle / WheelDiameter;
-		MoveTank.onForDegrees(-1*speed, speed, (int)angleToTurn, true);
+		double angleToTurn = (TrackWidth * angle) / WheelDiameter;
+		MoveTank.onForDegrees(-1*speed, speed, (int)Math.round(angleToTurn), true);
 	}
 	
 	/**

@@ -1,5 +1,6 @@
 package Motion;
 
+import EV3.ColorSensor;
 import EV3.MoveTank;
 
 import Tools.Alert;
@@ -67,6 +68,21 @@ static double whiteValue = Double.NaN;
 		
 		else {
 			return Sides.RIGHT;
+		}
+	}
+	
+	public static void find(Sides side, int speed) {
+
+		whiteValue = Aligner.whiteValue;
+
+		ColorSensor sensor = side == Sides.LEFT?Aligner.leftSensor:Aligner.rightSensor;
+		
+		if(whiteValue == Double.NaN) {
+			Alert.notify("The white value is not set!");
+		}
+
+		while(LineAlignment.precision(sensor.reflectedLight(), 1)<whiteValue) {
+			MoveTank.on(speed, speed);
 		}
 	}
 	

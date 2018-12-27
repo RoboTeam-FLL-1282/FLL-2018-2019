@@ -17,8 +17,21 @@ public class LineAlignment {
 		turnToWhite(turnSpeed, side);
 	}
 	
+	public static void align(Sides side, int speed) {
+		
+		int turnSpeed = speed-speed/2;
+		
+		BlackLineAlignment.find(side, speed);
+		
+		turnToBlack(turnSpeed, side);
+		
+		side = WhiteLineAlignment.find(speed);
+		
+		turnToWhite(turnSpeed, side);
+	}
+	
 	public static void turnToBlack(int turnSpeed, Sides side) {
-		while(precision(Aligner.leftSensor.reflectedLight(),4) != precision(Aligner.rightSensor.reflectedLight(), 4) 
+		while(precision(Aligner.leftSensor.reflectedLight(),2) != precision(Aligner.rightSensor.reflectedLight(), 2) 
 				|| precision(Aligner.rightSensor.reflectedLight(), 1) >= 0.4) {
 			
 			if(side == Sides.LEFT) {
