@@ -57,11 +57,12 @@ public class Traveler {
 	 * @param angle
 	 * @param speed
 	 */
-	public void turnInSpot(double angle, int speed) {
+	public void turnInSpot(double angle, float speed) {
 		double angleToTurn = (TrackWidth * angle) / WheelDiameter;
-		MoveTank.onForDegrees(-1*speed, speed, (int)Math.round(angleToTurn), true);
+//		System.out.println(angleToTurn);
+		MoveTank.onForDegrees(-1*speed, speed, angleToTurn, true);
 	}
-	
+
 	/**
 	 * Navigates to a specific x and y coordinates. 
 	 * @param x

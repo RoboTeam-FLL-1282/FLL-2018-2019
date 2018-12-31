@@ -6,7 +6,7 @@ import lejos.hardware.port.Port;
 public class Aligner {
 
 	// Members
-	static double blackValue = 0.08;
+	static double blackValue = 0.09;
 	static double whiteValue = 0.9;
 	public static ColorSensor leftSensor;
 	public static ColorSensor rightSensor;

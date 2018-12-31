@@ -31,7 +31,7 @@ public class LineAlignment {
 	}
 	
 	public static void turnToBlack(int turnSpeed, Sides side) {
-		while(precision(Aligner.leftSensor.reflectedLight(),2) != precision(Aligner.rightSensor.reflectedLight(), 2) 
+		while(precision(Aligner.leftSensor.reflectedLight(),2) != precision(Aligner.rightSensor.reflectedLight(), 2 ) 
 				|| precision(Aligner.rightSensor.reflectedLight(), 1) >= 0.4) {
 			
 			if(side == Sides.LEFT) {

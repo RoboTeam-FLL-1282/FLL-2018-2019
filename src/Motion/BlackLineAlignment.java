@@ -58,11 +58,11 @@ public class BlackLineAlignment {
 			Alert.notify("The black value is not set!");
 		}
 
-		while(LineAlignment.precision(Aligner.leftSensor.reflectedLight(), 3)>blackValue && LineAlignment.precision(Aligner.rightSensor.reflectedLight(), 3)>blackValue) {
+		while(LineAlignment.precision(Aligner.leftSensor.reflectedLight(), 2)>blackValue && LineAlignment.precision(Aligner.rightSensor.reflectedLight(), 2)>blackValue) {
 			MoveTank.on(speed, speed);
 		}
 
-		if(LineAlignment.precision(Aligner.leftSensor.reflectedLight(), 3) <= blackValue) {
+		if(LineAlignment.precision(Aligner.leftSensor.reflectedLight(), 2) <= blackValue) {
 			return Sides.LEFT;
 		}
 
@@ -76,6 +76,7 @@ public class BlackLineAlignment {
 		blackValue = Aligner.blackValue;
 
 		ColorSensor sensor = side == Sides.LEFT?Aligner.leftSensor:Aligner.rightSensor;
+		
 		
 		if(blackValue == Double.NaN) {
 			Alert.notify("The black value is not set!");

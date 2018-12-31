@@ -9,7 +9,7 @@ public class Colour implements ColorDetector, ColorIdentifier
 {
 	EV3ColorSensor	sensor;
 	float[]		sample;
-
+	
     	/**
      	* Creates ColorSensor object. This is a wrapper class for EV3ColorSensor.
      	* @param port SensorPort of EV3ColorSensor device.
