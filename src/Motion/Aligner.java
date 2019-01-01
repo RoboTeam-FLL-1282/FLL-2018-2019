@@ -39,4 +39,14 @@ public class Aligner {
 		rightSensor.reflectedLight();
 	}
 	
+	public static double getLeftSensorValue(Colors color) {
+		int precision = (color == Colors.BLACK)?(blackValue+"").length()-2:(blackValue+"").length()-2;
+		return LineAlignment.precision(leftSensor.reflectedLight(), precision);
+	}
+	
+	public static double getRightSensorValue(Colors color) {
+		int precision = (color == Colors.BLACK)?(blackValue+"").length()-2:(blackValue+"").length()-2;
+		return LineAlignment.precision(Unique.colorConvertor(rightSensor.reflectedLight(), color), precision);
+	}
+	
 }

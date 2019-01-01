@@ -1,6 +1,5 @@
 package Motion;
 
-import EV3.ColorSensor;
 import EV3.MoveTank;
 import Tools.Alert;
 
@@ -58,11 +57,11 @@ public class BlackLineAlignment {
 			Alert.notify("The black value is not set!");
 		}
 
-		while(LineAlignment.precision(Aligner.leftSensor.reflectedLight(), 2)>blackValue && LineAlignment.precision(Aligner.rightSensor.reflectedLight(), 2)>blackValue) {
+		while(Aligner.getLeftSensorValue(Colors.BLACK)>blackValue && Aligner.getRightSensorValue(Colors.BLACK)>blackValue) {
 			MoveTank.on(speed, speed);
 		}
 
-		if(LineAlignment.precision(Aligner.leftSensor.reflectedLight(), 2) <= blackValue) {
+		if(Aligner.getLeftSensorValue(Colors.BLACK) <= blackValue) {
 			return Sides.LEFT;
 		}
 
@@ -73,16 +72,13 @@ public class BlackLineAlignment {
 
 	public static void find(Sides side, int speed) {
 
-		blackValue = Aligner.blackValue;
-
-		ColorSensor sensor = side == Sides.LEFT?Aligner.leftSensor:Aligner.rightSensor;
-		
+		blackValue = Aligner.blackValue;		
 		
 		if(blackValue == Double.NaN) {
 			Alert.notify("The black value is not set!");
 		}
 
-		while(LineAlignment.precision(sensor.reflectedLight(), 2)>blackValue) {
+		while((side == Sides.LEFT?Aligner.getLeftSensorValue(Colors.BLACK):Aligner.getRightSensorValue(Colors.BLACK))>blackValue) {
 			MoveTank.on(speed, speed);
 		}
 	}

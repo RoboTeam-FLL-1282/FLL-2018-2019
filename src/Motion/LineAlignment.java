@@ -31,8 +31,8 @@ public class LineAlignment {
 	}
 	
 	public static void turnToBlack(int turnSpeed, Sides side) {
-		while(precision(Aligner.leftSensor.reflectedLight(),2) != precision(Aligner.rightSensor.reflectedLight(), 2 ) 
-				|| precision(Aligner.rightSensor.reflectedLight(), 1) >= 0.4) {
+		while(Aligner.getLeftSensorValue(Colors.BLACK) != Aligner.getRightSensorValue(Colors.BLACK) 
+				|| precision(Aligner.rightSensor.reflectedLight(), 1) >= 0.6) {
 			
 			if(side == Sides.LEFT) {
 				MoveTank.on(turnSpeed, -1*turnSpeed);
@@ -48,7 +48,7 @@ public class LineAlignment {
 	}
 	
 	public static void turnToWhite(int turnSpeed, Sides side) {
-		while(precision(Aligner.leftSensor.reflectedLight(),4) != precision(Aligner.rightSensor.reflectedLight(), 4) 
+		while(Aligner.getLeftSensorValue(Colors.WHITE) != Aligner.getRightSensorValue(Colors.WHITE) 
 				/*|| precision(Aligner.rightSensor.reflectedLight(), 1) <= 0.5*/) {
 			
 			if(side == Sides.LEFT) {

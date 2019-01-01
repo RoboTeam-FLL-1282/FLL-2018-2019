@@ -12,6 +12,7 @@ import Motion.Aligner;
 import Motion.GyroPID;
 import Motion.LineAlignment;
 import Motion.Sides;
+import Motion.Unique;
 import Motion.WhiteLineAlignment;
 
 public class SpecialFunctions {
@@ -74,10 +75,12 @@ public class SpecialFunctions {
 		Wait.time(2712);
 		pid.stopPID();
 
-		MoveTank.onForCent(100, 100, 10, true);
+		//MoveTank.onForCent(100, 100, 10, true);
 
-		LineAlignment.align(Sides.LEFT, -100);
+//		LineAlignment.align(Sides.LEFT, -100);
 
+		Unique.alignOnBigAngle(-100, Sides.LEFT);
+		
 		return pid;
 	}
 
