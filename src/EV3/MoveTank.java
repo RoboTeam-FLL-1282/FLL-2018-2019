@@ -59,7 +59,7 @@ public abstract class MoveTank {
 		leftMotor.setSpeed(Math.abs(leftSpeed));
 		rightMotor.setSpeed(Math.abs(rightSpeed));
 		move(leftSpeed, rightSpeed);
-		Delay.msDelay((int)((degrees/Math.abs(leftSpeed))*1000));
+		Delay.msDelay((int)((degrees/Math.abs(rightSpeed))*1000));
 		if(brakeAtEnd) {
 			leftMotor.stop(true);
 			rightMotor.stop(true);

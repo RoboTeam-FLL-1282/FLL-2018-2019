@@ -43,7 +43,7 @@ public class SpecialFunctions {
 	public static void smileyOff() {
 		smiley = false;
 	}
-
+	
 	public static GyroPID navigateToOpsiteSection() {
 
 		Aligner.setSensorsPorts(Ports.S2, Ports.S4);
@@ -68,7 +68,7 @@ public class SpecialFunctions {
 		Sound.beep(100);
 		pid.g.reset();
 		MoveTank.onForCent(200, 200, 500, true);
-		pid.setTarget(23);
+		pid.setTarget(21);
 
 		// Move straight (target = T shaped line)
 		pid.startPID();

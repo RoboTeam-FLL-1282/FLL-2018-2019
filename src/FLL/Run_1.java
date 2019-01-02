@@ -2,7 +2,10 @@ package FLL;
 
 import EV3.MoveTank;
 import EV3.Sound;
+import EV3.Wait;
 import Motion.GyroPID;
+import Motion.LineAlignment;
+import Motion.WhiteLineAlignment;
 import Navigation.SpecialFunctions;
 import Navigation.Traveler;
 import Tools.Default;
@@ -19,23 +22,40 @@ public class Run_1 {
 		Default.settings();      								  
 		
 		GyroPID pid = SpecialFunctions.navigateToOpsiteSection();	    
-
+		
 		Sound.beep(100);
 		MoveTank.onForCent(-100, -100, 130, true);
 
 		Traveler t = new Traveler(0, 0, 12, 8.2);
 		
 		Sound.beep(100);
-		t.turnInSpot(92, -100);
+		t.turnInSpot(95, -100);
 		
-		Sound.beep(100);
-		MoveTank.onForCent(-100, -100, 600, true);
+		WhiteLineAlignment.align(-100);
 		
-		pid.closePID();
+		t.turnInSpot(145, -100);
 		
+		pid.setTarget(pid.g.angle());
+		pid.setBaseSpeed(350);
+		pid.startPID();
+		Wait.time(3000);
+		pid.stopPID();
+		pid.setBaseSpeed(-350);
+		pid.startPID();
+		Wait.time(2000);
+		pid.stopPID();
+		LineAlignment.align(-100);
 		
-		
-		Sound.beep(100);
+//		Sound.beep(100);
+//		MoveTank.onForCent(-100, -100, 600, true);
+//		
+//		pid.closePID();
+//		
+//		Sound.beep(100);
+//
+//		// Move backwards - ready for next part!
+//		MoveTank.onForCent(50, 50, 300, true);
+//		Sound.beep(100);
 
 
 	}

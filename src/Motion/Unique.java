@@ -23,6 +23,6 @@ public class Unique {
 	public static void alignOnBigAngle(int speed, Sides side) {
 		BlackLineAlignment.find(side, speed);
 		MoveTank.onForDegrees(0, 100, 200, true);
-		LineAlignment.align(side, -speed);
+		LineAlignment.align(side, speed);
 	}
 }
