@@ -6,10 +6,10 @@ import lejos.hardware.port.Port;
 public class Aligner {
 
 	// Members
-	static double blackValue = 0.08;
+	static double blackValue = 0.09;
 	static double whiteValue = 0.9;
-	static ColorSensor leftSensor;
-	static ColorSensor rightSensor;
+	public static ColorSensor leftSensor;
+	public static ColorSensor rightSensor;
 	
 	/**
 	 * @param blackValue
@@ -35,6 +35,18 @@ public class Aligner {
 		rightSensor = new ColorSensor(rightPort);
 		leftSensor.setReflectedLightMode();
 		rightSensor.setReflectedLightMode();
+		leftSensor.reflectedLight();
+		rightSensor.reflectedLight();
+	}
+	
+	public static double getLeftSensorValue(Colors color) {
+		int precision = (color == Colors.BLACK)?(blackValue+"").length()-2:(blackValue+"").length()-2;
+		return LineAlignment.precision(leftSensor.reflectedLight(), precision);
+	}
+	
+	public static double getRightSensorValue(Colors color) {
+		int precision = (color == Colors.BLACK)?(blackValue+"").length()-2:(blackValue+"").length()-2;
+		return LineAlignment.precision(Unique.colorConvertor(rightSensor.reflectedLight(), color), precision);
 	}
 	
 }

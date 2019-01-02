@@ -8,6 +8,7 @@ public class GyroPID extends Thread {
 	// Members:
 	PID pid = new PID();	
 	boolean run = true;
+	boolean opened = true;
 
 	public GyroPID() {}
 
@@ -87,13 +88,17 @@ public class GyroPID extends Thread {
 	public void stopPID() {
 		run = false;
 	}	
+	
+	public void closePID() {
+		opened = false;
+	}
 
 	/**
 	 * Uses the Gyro sensor to move the robot with the PID calculations.
 	 */
 	@Override
 	public void run() {
-		while(run) {
+		while(run && opened) {
 			double gyroValue = g.angle();
 			double turn = pid.calculateTurn(gyroValue);
 			double leftSpeed;
@@ -109,7 +114,7 @@ public class GyroPID extends Thread {
 			display(turn, leftSpeed, rightSpeed, gyroValue); // Not necessary 
 			MoveTank.on((int)leftSpeed, (int)rightSpeed);
 			Wait.time((int)(pid.time*1000));
-			while(!run) {
+			while(!run && opened) {
 				Wait.time(100);
 			}
 		}

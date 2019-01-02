@@ -6,7 +6,7 @@ import Tools.Alert;
 public class BlackLineAlignment {
 
 	static double blackValue = Double.NaN;
-	
+
 	/**
 	 * @param blackValue - The value that the sensor returns when it sees the black line.
 	 * It can also be any other color value.
@@ -14,7 +14,7 @@ public class BlackLineAlignment {
 	public static void setBlackValue(double blackValue) {
 		BlackLineAlignment.blackValue = blackValue;
 	}
-	
+
 	/**
 	 * The robot drives until it recognizes a black line.
 	 * Then it aligns on the black line using two color sensors.
@@ -23,13 +23,13 @@ public class BlackLineAlignment {
 	 * @param rightPort
 	 */
 	public static void align(int speed) {
-		
+
 		blackValue = Aligner.blackValue;
-		
+
 		if(blackValue == Double.NaN) {
 			Alert.notify("The black value is not set!");
 		}
-		
+
 		while(Aligner.leftSensor.reflectedLight()>blackValue && Aligner.rightSensor.reflectedLight()>blackValue) {
 			MoveTank.on(speed, speed);
 		}
@@ -46,6 +46,40 @@ public class BlackLineAlignment {
 				MoveTank.on(0, speed);
 			}
 			MoveTank.off();
+		}
+	}
+
+	public static Sides find(int speed) {
+
+		blackValue = Aligner.blackValue;
+
+		if(blackValue == Double.NaN) {
+			Alert.notify("The black value is not set!");
+		}
+
+		while(Aligner.getLeftSensorValue(Colors.BLACK)>blackValue && Aligner.getRightSensorValue(Colors.BLACK)>blackValue) {
+			MoveTank.on(speed, speed);
+		}
+
+		if(Aligner.getLeftSensorValue(Colors.BLACK) <= blackValue) {
+			return Sides.LEFT;
+		}
+
+		else {
+			return Sides.RIGHT;
+		}
+	}
+
+	public static void find(Sides side, int speed) {
+
+		blackValue = Aligner.blackValue;		
+		
+		if(blackValue == Double.NaN) {
+			Alert.notify("The black value is not set!");
+		}
+
+		while((side == Sides.LEFT?Aligner.getLeftSensorValue(Colors.BLACK):Aligner.getRightSensorValue(Colors.BLACK))>blackValue) {
+			MoveTank.on(speed, speed);
 		}
 	}
 }
