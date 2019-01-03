@@ -48,7 +48,7 @@ public class SpecialFunctions {
 
 		Aligner.setSensorsPorts(Ports.S2, Ports.S4);
 		Aligner.setWhiteValue(0.85);
-		GyroPID pid = new GyroPID(-1, 1, 0.001, 0.001);
+		GyroPID pid = new GyroPID(-3, 1, 0.001, 0.001);
 		pid.setBaseSpeed(-250);
 		smiley();
 		Sound.beep(100);
@@ -68,11 +68,14 @@ public class SpecialFunctions {
 		Sound.beep(100);
 		pid.g.reset();
 		MoveTank.onForCent(200, 200, 500, true);
-		pid.setTarget(21);
+		pid.setTarget(21.5);
 
 		// Move straight (target = T shaped line)
 		pid.startPID();
-		Wait.time(2712);
+		for(int i = -100; i>-250; i--) {
+			pid.setBaseSpeed(i);
+		}
+		Wait.time(2675);
 		pid.stopPID();
 
 		//MoveTank.onForCent(100, 100, 10, true);
