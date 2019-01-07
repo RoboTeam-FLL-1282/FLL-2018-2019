@@ -9,6 +9,7 @@ import EV3.Sound;
 import EV3.Wait;
 import Motion.Accelerator;
 import Motion.Aligner;
+import Motion.BlackLineAlignment;
 import Motion.GyroPID;
 import Motion.LineAlignment;
 import Motion.Sides;
@@ -48,7 +49,7 @@ public class SpecialFunctions {
 
 		Aligner.setSensorsPorts(Ports.S2, Ports.S4);
 		Aligner.setWhiteValue(0.85);
-		GyroPID pid = new GyroPID(-1, 1, 0.001, 0.001);
+		GyroPID pid = new GyroPID(-25, 1, 0.001, 0.001);
 		pid.setBaseSpeed(-250);
 		smiley();
 		Sound.beep(100);
@@ -67,19 +68,34 @@ public class SpecialFunctions {
 		WhiteLineAlignment.align(-250);
 		Sound.beep(100);
 		pid.g.reset();
-		MoveTank.onForCent(200, 200, 500, true);
-		pid.setTarget(21);
+		//MoveTank.onForCent(200, 200, 500, true);
+	
+		Traveler t = new Traveler(0, 0, 12, 8.2);
+		t.turnInSpot(80, -100);
+		pid.setTarget(pid.g.angle());
+		pid.startPID();
+		Wait.time(1700);
+		pid.stopPID();
+		BlackLineAlignment.find(Sides.RIGHT, -100);
+		t.turnInSpot(20, -100);
+		LineAlignment.align(-100);
+		
+		/*
+		pid.setTarget(21.25);
 
 		// Move straight (target = T shaped line)
 		pid.startPID();
-		Wait.time(2712);
+		for(int i = -100; i>-250; i--) {
+			pid.setBaseSpeed(i);
+		}
+		Wait.time(2675);
 		pid.stopPID();
-
+*/
 		//MoveTank.onForCent(100, 100, 10, true);
 
 //		LineAlignment.align(Sides.LEFT, -100);
-
-		Unique.alignOnBigAngle(-100, Sides.LEFT);
+ 
+		//Unique.alignOnBigAngle(-100, Sides.LEFT);
 		
 		return pid;
 	}

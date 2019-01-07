@@ -1,6 +1,7 @@
 package Navigation;
 
 import EV3.MoveTank;
+import Motion.Sides;
 
 public class Traveler {
 	
@@ -61,6 +62,20 @@ public class Traveler {
 		double angleToTurn = (TrackWidth * angle) / WheelDiameter;
 //		System.out.println(angleToTurn);
 		MoveTank.onForDegrees(-1*speed, speed, angleToTurn, true);
+	}
+	
+	/**
+	 * Drives in an arc. 
+	 * @param velocity
+	 * @param radius
+	 * @param degrees
+	 * @param side
+	 */
+	public void arc(double velocity, double radius, double degrees, Sides side) {
+		double disin = 2*Math.PI*radius*degrees/360;
+		double disout = disin+2*TrackWidth*Math.PI;
+		if(side == Sides.LEFT)
+			MoveTank.onForSeconds(velocity, velocity*disout/disin, disin/velocity, true);
 	}
 
 	/**

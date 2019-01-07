@@ -72,11 +72,11 @@ public abstract class MoveTank {
 	 * @param seconds
 	 * @param brakeAtEnd
 	 */
-	public static void onForSeconds(int leftSpeed, int rightSpeed, int seconds, boolean brakeAtEnd) {
-		leftMotor.setSpeed(leftSpeed);
-		rightMotor.setSpeed(rightSpeed);
-		move(leftSpeed, rightSpeed);
-		Delay.msDelay(seconds*1000);
+	public static void onForSeconds(double leftSpeed, double rightSpeed, double seconds, boolean brakeAtEnd) {
+		leftMotor.setSpeed((float)Math.abs(leftSpeed));
+		rightMotor.setSpeed((float)Math.abs(rightSpeed));
+		move((float)leftSpeed, (float)rightSpeed);
+		Delay.msDelay((int)(seconds*1000));
 		if(brakeAtEnd) {
 			leftMotor.stop(true);
 			rightMotor.stop(true);
