@@ -21,19 +21,22 @@ public class Run_1 {
 		// Diameter: 8.2 c"m
 
 		//I commented your code because I to run a simple program and I don't know how to create a new one.z\\\\\\\\\\\\\\\\\ Excuse me.
-		BrickButtons.waitForAnyPress();
 		Default.settings();      								  
 		
 		GyroPID pid = SpecialFunctions.navigateToOpsiteSection();	    
 		
-		MoveTank.onForCent(-100, -100, 150, true);
-
+//		MoveTank.onForCent(-100, -100, 150, true);
+//
 		Traveler t = new Traveler(0, 0, 12, 8.2);
+//		
+//		t.turnInSpot(95, -100);
+//		
+//		Sound.beep(100);
+//		BlackLineAlignment.align(-100);
 		
-		t.turnInSpot(95, -100);
+		MoveTank.onForCent(-100, -100, 300, true);
 		
-		Sound.beep(100);
-		BlackLineAlignment.align(-100);
+		BlackLineAlignment.align(100);
 		
 		MoveTank.onForCent(100, 100, 160, true);
 		
@@ -42,13 +45,13 @@ public class Run_1 {
 		pid.setTarget(pid.g.angle());
 		pid.setBaseSpeed(250);
 		pid.startPID();
-		Wait.time(5300);
+		Wait.time(5000);
 		pid.stopPID();
 		
 		pid.setBaseSpeed(-250);
-		pid.setTarget(pid.g.angle());
+		pid.setTarget(pid.g.angle() - 8);
 		pid.startPID();
-		Wait.time(2500);
+		Wait.time(3000);
 		pid.stopPID();
 		LineAlignment.align(-100);
 		
