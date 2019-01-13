@@ -45,15 +45,28 @@ public class Run_1 {
 		pid.setTarget(pid.g.angle());
 		pid.setBaseSpeed(250);
 		pid.startPID();
-		Wait.time(5000);
+		Wait.time(4700);
 		pid.stopPID();
 		
 		pid.setBaseSpeed(-250);
-		pid.setTarget(pid.g.angle() - 8);
+		pid.setTarget(pid.g.angle()+2.5); 
 		pid.startPID();
-		Wait.time(3000);
+		Wait.time(3450);
 		pid.stopPID();
-		LineAlignment.align(-100);
+		
+		BlackLineAlignment.find(-250);
+		MoveTank.onForCent(100, 100, 150, true);
+		t.turnInSpot(35, 100);
+		LineAlignment.alignOnBlack(-100);
+		
+		Sound.beep(100);
+		
+		t.turnInSpot(40, 100);
+		pid.setBaseSpeed(250);
+		pid.setTarget(pid.g.angle());
+		pid.startPID();
+		Wait.time(2000);
+		
 		
 //		Sound.beep(100);
 //		MoveTank.onForCent(-100, -100, 600, true);

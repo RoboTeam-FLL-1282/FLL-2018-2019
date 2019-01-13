@@ -58,7 +58,7 @@ public class SpecialFunctions {
 		pid.g.recalibrate();
 
 		// Move robot
-		Accelerator.accelerate(0.5, -100, -250, false);
+		Accelerator.accelerate(0.5, -150, -250, false);
 		pid.startPID();
 		Wait.time(400);
 		pid.stopPID();
@@ -77,11 +77,14 @@ public class SpecialFunctions {
 		Wait.time(1000);
 		pid.stopPID();
 		
-		BlackLineAlignment.find(Sides.LEFT, -100);
-		MoveTank.onForCent(-100, -100, 240, true);
+		BlackLineAlignment.find(Sides.LEFT, -250);
+		MoveTank.onForCent(-250, -250, 240, true);
 		t.turnInSpot(33, -100);
-		//BlackLineAlignment.align(-100);
-		LineAlignment.alignOnWhite(-100);
+		MoveTank.onForCent(-100, -100, 170, true);
+		WhiteLineAlignment.align(100);
+		BlackLineAlignment.align(100);
+		//LineAlignment.align(100);
+		
 		
  
 		//Unique.alignOnBigAngle(-100, Sides.LEFT);
