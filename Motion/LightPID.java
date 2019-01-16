@@ -1,0 +1,14 @@
+package Motion;
+
+public class LightPID extends Thread {
+
+	 ///////////////////////////////////////
+	 // Still empty... /////////////////////
+	 ///////////////////////////////////////
+	
+	@Override
+	public void run() {
+		
+	}
+	
+}
